@@ -225,25 +225,25 @@ body.edit-mode .add-card{display:flex}
 
 <div class="layout">
   <div class="sidebar" id="sidebar">
-    <div class="sidebar-hd">Cuentas</div>
+    <div class="sidebar-hd">Contadores</div>
     <div class="accts-list" id="accts-list"></div>
-    <button class="btn-new-acct" id="btn-new-acct">+ Nueva cuenta</button>
+    <button class="btn-new-acct" id="btn-new-acct">+ Nuevo contador</button>
   </div>
   <div class="main">
     <div class="empty-state" id="empty-state">
       <div class="ico">◈</div>
-      <h2>Sin cuentas aún</h2>
-      <p>Crea tu primera cuenta para empezar a registrar datos.</p>
-      <button class="btn-p" id="btn-empty-create">Crear cuenta</button>
+      <h2>Sin contadores aún</h2>
+      <p>Crea tu primero contador para empezar a registrar datos.</p>
+      <button class="btn-p" id="btn-empty-create">Crear contador</button>
     </div>
     <div id="acct-view" style="display:none"></div>
   </div>
 </div>
 
-<!-- Modal nueva cuenta -->
+<!-- Modal nuevo contador -->
 <div class="overlay" id="new-overlay">
   <div class="modal">
-    <h2>Nueva cuenta</h2>
+    <h2>Nuevo contador</h2>
     <div class="fg"><label class="fl">Nombre</label><input class="fi" id="new-name" placeholder="ej: Encuesta sabores" maxlength="40"/></div>
     <div class="fg">
       <label class="fl">Opciones a contar</label>
@@ -378,7 +378,7 @@ function loadHash() {
     d.id=uid(); d.name=d.name+' (importada)';
     state.accounts.push(d); state.activeId=d.id; save();
     history.replaceState(null,'',location.pathname);
-    toast('✓ Cuenta importada');
+    toast('✓ Contador importado');
   }catch(e){}
 }
 
@@ -402,7 +402,7 @@ function selectAccount(id) {
   document.getElementById('sidebar').classList.remove('open');
 }
 async function delAccount(id) {
-  const ok=await dlgConfirm('Eliminar cuenta','¿Eliminar esta cuenta y todos sus datos?');
+  const ok=await dlgConfirm('Eliminar contador','¿Eliminar este contador y todos sus datos?');
   if (!ok) return;
   state.accounts=state.accounts.filter(a=>a.id!==id);
   if (state.activeId===id) state.activeId=state.accounts[0]?.id||null;
@@ -636,7 +636,7 @@ async function doReset(acctId) {
 
 async function doRenameTitle(acctId) {
   const acct=state.accounts.find(a=>a.id===acctId);
-  const n=await dlgPrompt('Renombrar cuenta','Nombre',acct.name);
+  const n=await dlgPrompt('Renombrar contador','Nombre',acct.name);
   if (!n) return;
   acct.name=n; save();
   const el=document.getElementById('acct-title-el');
