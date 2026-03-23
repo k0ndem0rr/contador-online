@@ -741,9 +741,9 @@ function setTheme(dk) {
   document.documentElement.setAttribute('data-theme',dk?'dark':'light');
   document.getElementById('theme-btn').textContent=dk?'☀️':'🌙';
   const acct=state.accounts.find(a=>a.id===state.activeId);
-  if(acct){
+  if(acct && document.getElementById('cgrid')){
     const pal=getPalette(acct.options.length,dk);
-    buildCards(acct,pal); // rebuild so card colours update
+    buildCards(acct,pal);
     updateStats(acct);
   }
 }
