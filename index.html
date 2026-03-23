@@ -788,11 +788,23 @@ function renderAccountView() {
       <button class="btn-reset" id="btn-reset">Resetear contadores</button>
     </div>`;
 
-  // events via delegation on view
+  // events via delegation on view (remove first to avoid duplicates on re-render)
+  view.removeEventListener('click', handleViewClick);
   view.addEventListener('click', handleViewClick);
 }
 
 function handleViewClick(e) {
+  // buttons without data-role: share, add-option, reset
+  const shareBtn = e.target.closest('#share-btn');
+  if (shareBtn) { shareAccount(shareBtn.dataset.acct); return; }
+
+  const addOpt = e.target.closest('#btn-add-opt-inline');
+  if (addOpt) { addOptionInline(); return; }
+
+  const reset = e.target.closest('#btn-reset');
+  if (reset) { resetAccount(state.activeId); return; }
+
+  // elements with data-role
   const el = e.target.closest('[data-role]');
   if (!el) return;
   const role = el.dataset.role;
@@ -804,16 +816,6 @@ function handleViewClick(e) {
   if (role === 'label') { makeEditable(el, () => saveLabel(el, acctId, optId)); return; }
   if (role === 'number') { makeEditable(el, () => saveNumber(el, acctId, optId), true); return; }
   if (role === 'title') { makeEditable(el, () => saveTitle(el, acctId)); return; }
-
-  // share btn
-  const shareBtn = e.target.closest('#share-btn');
-  if (shareBtn) { shareAccount(shareBtn.dataset.acct); return; }
-
-  const addOpt = e.target.closest('#btn-add-opt-inline');
-  if (addOpt) { addOptionInline(); return; }
-
-  const reset = e.target.closest('#btn-reset');
-  if (reset) { resetAccount(acctId || state.activeId); return; }
 }
 
 // ── TAP ──
