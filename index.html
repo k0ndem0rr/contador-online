@@ -536,7 +536,9 @@ function buildCards(acct, pal) {
     numEl.className='c-num';
     numEl.id='num-'+opt.id;
     numEl.textContent=opt.count;
-    numEl.addEventListener('click',e=>{e.stopPropagation();if(editMode)doEditNum(acct.id,opt.id,numEl);});
+    numEl.addEventListener('click',e=>{
+      if(editMode){e.stopPropagation();doEditNum(acct.id,opt.id,numEl);}
+    });
     card.appendChild(numEl);
 
     // Tap handler on card itself
